@@ -64,7 +64,6 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
   config.before(:each) do
     if  ENV['HEADLESS'] == 'true'
-      puts "ola"
       Capybara.current_driver = :selenium_chrome_headless
     else
       Capybara.current_driver = :selenium_chrome

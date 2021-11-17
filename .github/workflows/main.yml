@@ -1,0 +1,62 @@
+env:
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+  RAILS_ENV: test
+  CAPYBARA_JAVASCRIPT_DRIVER: chrome_headless
+  HEADLESS: true
+
+name: Rails tests
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+jobs:
+  rspec-test:
+    name: RSpec
+    runs-on: ubuntu-18.04
+    services:
+      postgres:
+        image: postgres:latest
+        ports:
+          - 5432:5432
+        options: >-
+          --mount type=tmpfs,destination=/var/lib/postgresql/data
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: dccinema_test
+    steps:
+      - uses: actions/checkout@v1
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.2
+          bundler-cache: true
+
+      # - uses: browser-actions/setup-chrome@latest
+      # - run: chrome --version
+      - name: Install postgres client
+        run: sudo apt-get install libpq-dev
+      - name: Prepare database
+        run: bundler exec rails db:prepare RAILS_ENV=test
+      # - name: precomppile webpacker
+      #   run: RAILS_ENV=test ./bin/rails webpacker:compile
+      # - name: Bundle Install
+      #   run: bundle check || bundle install --path vendor/bundle --jobs 4 --retry 3
+
+      - name: Yarn Install
+        run: bin/rails yarn:install
+      - name: Compile Assets
+        run: |
+          if [[ ! -d public/packs-test ]]; then
+            bin/rails webpacker:compile
+          else
+            echo "No need to compile assets."
+          fi
+
+      - name: Run tests
+        run: HEADLESS=true RAILS_ENV=test bundle exec rspec spec
