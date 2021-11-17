@@ -99,6 +99,8 @@ development: &default
 test:
   <<: *default
   database: dccinema_test
+  username: <%= ENV.fetch("POSTGRES_USER", "postgres") %>
+  password: <%= ENV.fetch("POSTGRES_PASSWORD", "") %>
 
 production: &deploy
   adapter: postgresql
