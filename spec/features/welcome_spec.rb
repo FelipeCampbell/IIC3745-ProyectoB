@@ -27,7 +27,6 @@ RSpec.describe 'Create-Movie', type: :system do
     expect(page).to have_content("6") # Room 6
     expect(page).to have_content("3") # Noche
     expect(page).to have_content("1") # Room 1
-    expect(page).to have_content("1") # Matiné
   end
 
   after do
