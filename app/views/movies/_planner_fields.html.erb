@@ -1,8 +1,8 @@
 <div class="field">
     <%= f.label "Room" %>
-    <%= f.number_field :room %>
+    <%= f.select(:room, options_for_select((1..8).map { |num| ["Room #{num}", num] })) %>
 </div>
 <div class="field">
     <%= f.label "Time" %>
-    <%= f.number_field :time %>
+    <%= f.select(:time, options_for_select([["Matiné", 1], ["Tanda", 2], ["Noche", 3]])) %>
 </div>
