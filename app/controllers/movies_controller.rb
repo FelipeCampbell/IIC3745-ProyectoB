@@ -1,3 +1,5 @@
+require 'set'
+
 class MoviesController < ApplicationController
   before_action :set_movie, only: %i[ show edit update destroy ]
 
@@ -25,13 +27,11 @@ class MoviesController < ApplicationController
     if(rooms_are_free)
       create_screenings()
     end
-    # Rails.logger.info "Que onda 0: #{@movie.planners} "
-    # Rails.logger.info "Veamos las movies planners 0: #{@movie.inspect} "
-
+    invalid_fields = invalid_movie_fields?(movie_params)
     
     respond_to do |format|
       # veamos = movie_params
-      if (rooms_are_free && @movie.save)
+      if (rooms_are_free && !invalid_fields && @movie.save)
         format.html { redirect_to @movie, notice: "Movie was successfully created." }
         format.json { render :show, status: :created, location: @movie }
       else
@@ -54,7 +54,6 @@ class MoviesController < ApplicationController
       start_date = @movie.planners[0][:start_date]
       end_date = @movie.planners[0][:end_date]
       
-      #Rails.logger.info "Lets check for overlap"
       @movie.planners.each do |planner|
         planner[:start_date] = start_date
         planner[:end_date] = end_date
@@ -68,8 +67,41 @@ class MoviesController < ApplicationController
         end
       end
       return rooms_are_free
-
     end
+
+    def invalid_movie_fields?(movie_params)
+      errors = false
+      if movie_params["name"].length > 100
+        @movie.errors.add(:base, "Movie name is too long")
+        errors = true
+      end
+      start_date = movie_params["planners_attributes"]["0"]["start_date"].to_date
+      end_date = movie_params["planners_attributes"]["0"]["end_date"].to_date
+      if start_date > end_date
+        @movie.errors.add(:base, "start_date cannot be after end_date")
+        errors = true
+      end
+
+      if duplicate_room_time?
+        @movie.errors.add(:base, "room/time cannot be duplicated")
+        errors = true
+      end
+      errors
+    end
+
+    def duplicate_room_time?
+      roomtimes = Set.new
+      for item in movie_params["planners_attributes"].to_hash.values do
+        pair = [item["room"], item["time"]]
+        if roomtimes.include?(pair)
+          return true
+        else
+          roomtimes << pair
+        end
+      end
+      return false
+    end
+
     def create_screenings
       @screenings = []
       @movie.planners.each do |planner|
