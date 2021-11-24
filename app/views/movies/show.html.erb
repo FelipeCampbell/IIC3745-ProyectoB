@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @movie.name %>
+</p>
+
+<p>
+  <strong>Image:</strong>
+  <%= @movie.image %>
+</p>
+
+
+<% @movie.planners.each_with_index do |planner, index| %>
+  <% if index == 0%>
+    <p>
+      <strong>Start Date:</strong>
+      <%= planner.start_date %>
+    </p>
+
+    <p>
+      <strong>End Date:</strong>
+      <%= planner.end_date %>
+    </p>
+  <% end %>
+  <p>
+    <strong>Room:</strong>
+    <%= planner.room %>
+  </p>
+
+  <p>
+    <strong>Time:</strong>
+    <%= planner.time %>
+  </p>
+<% end %>
+
+
+<%= link_to 'Back', movies_path %>
