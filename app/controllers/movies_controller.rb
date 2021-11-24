@@ -49,7 +49,7 @@ class MoviesController < ApplicationController
     end
 
     def check_planner()
-      plansOverlap = true
+      rooms_are_free = true
       # dates for planners that didnt receive (only first planner gets date from form)
       start_date = @movie.planners[0][:start_date]
       end_date = @movie.planners[0][:end_date]
@@ -64,10 +64,10 @@ class MoviesController < ApplicationController
           @movie.errors.add(:base, "Schedule Overlap: Room #{plannerOverlap.room} at Time #{plannerOverlap.time} is used from #{plannerOverlap.start_date} to #{plannerOverlap.end_date}")
         end
         if(@plannersOverlap.length > 0)
-          plansOverlap = false
+          rooms_are_free = false
         end
       end
-      return plansOverlap
+      return rooms_are_free
 
     end
     def create_screenings
