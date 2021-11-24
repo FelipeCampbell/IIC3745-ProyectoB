@@ -21,17 +21,17 @@ class MoviesController < ApplicationController
   def create
     movie_params = movie_params()
     @movie = Movie.new(movie_params)
-    room_is_free = check_planner()
-    # if(room_is_free)
+    rooms_are_free = check_planner()
+    if(rooms_are_free)
       create_screenings()
-    # end
-    Rails.logger.info "Que onda 0: #{@movie.planners} "
+    end
+    # Rails.logger.info "Que onda 0: #{@movie.planners} "
     # Rails.logger.info "Veamos las movies planners 0: #{@movie.inspect} "
 
     
     respond_to do |format|
       # veamos = movie_params
-      if (room_is_free && @movie.save)
+      if (rooms_are_free && @movie.save)
         format.html { redirect_to @movie, notice: "Movie was successfully created." }
         format.json { render :show, status: :created, location: @movie }
       else
