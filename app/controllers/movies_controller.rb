@@ -22,6 +22,11 @@ class MoviesController < ApplicationController
   # POST /movies or /movies.json
   def create
     movie_params = movie_params()
+
+    if !date_params?(movie_params)
+      return render inline: "<p>You need to include start_date and end_date</p> <%= link_to 'New Movie', new_movie_path %>"
+    end
+    
     @movie = Movie.new(movie_params)
     rooms_are_free = check_planner()
     if(rooms_are_free)
@@ -44,6 +49,15 @@ class MoviesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def date_params?(movie_params)
+      not_start_date = movie_params["planners_attributes"]["0"]["start_date"].empty?
+      not_end_date = movie_params["planners_attributes"]["0"]["end_date"].empty?
+      if not_start_date || not_end_date
+        return false
+      end
+      return true
+    end
+
     def set_movie
       @movie = Movie.find(params[:id])
     end
