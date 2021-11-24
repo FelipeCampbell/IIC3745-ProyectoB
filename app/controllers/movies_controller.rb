@@ -22,17 +22,17 @@ class MoviesController < ApplicationController
   # POST /movies or /movies.json
   def create
     movie_params = movie_params()
+    @movie = Movie.new(movie_params)
 
     if !date_params?(movie_params)
-      return render inline: "<p>You need to include start_date and end_date</p> <%= link_to 'New Movie', new_movie_path %>"
+      @movie.errors.add(:base, "You need to include Start date and End date")
+    else
+      rooms_are_free = check_planner()
+      if(rooms_are_free)
+        create_screenings()
+      end
+      invalid_fields = invalid_movie_fields?(movie_params)
     end
-    
-    @movie = Movie.new(movie_params)
-    rooms_are_free = check_planner()
-    if(rooms_are_free)
-      create_screenings()
-    end
-    invalid_fields = invalid_movie_fields?(movie_params)
     
     respond_to do |format|
       # veamos = movie_params
