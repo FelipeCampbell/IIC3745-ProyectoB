@@ -1,2 +1,49 @@
 <h1>Welcome#index</h1>
 <p>Find me in app/views/welcome/index.html.erb</p>
+<% ocuped_seats=[{row:'A', column:1}, {row:'D', column:12}]%>
+<% rows = ['A', 'B', 'C', 'D']%>
+<div style="width: 858px;">
+<div>
+  <% rows.each do |row| %>
+    <div style="width: 858px; height: 20px;">
+      <div style="float: left; width: 30px; height: 40px; margin: 12px;">
+        <div style="width: 30px; height: 30px;text-align: center;margin-top:10px;font-size:30px;">
+          <%= row %>
+        </div>
+      </div>
+    <% (1..12).each do |column| %>
+      <% if ocuped_seats.include?({row: row, column: column}) %>
+        <div style="background: red;float: left; border: solid 1px; width: 40px; height: 40px; margin: 12px;">
+        </div>
+      <% else%>
+        <a href=<%= welcome_index_path({row: row, column: column})%>>
+        <% if $clicked_seats.include?({row: row, column: column})%>
+          <div style="background: green; float: left; border: solid 1px; width: 40px; height: 40px; margin: 12px;"> 
+          </div>
+        <% else %>
+          <div style="float: left; border: solid 1px; width: 40px; height: 40px; margin: 12px;"> 
+          </div>
+        <% end %>
+        </a>
+      <% end %>
+    <% end %>
+    </div>
+  <% end %>
+</div>
+<% if $clicked_seats.length > 0 %>
+  <div>
+    <div style="float:left">
+      <h1>Asientos</h1>
+      <% $clicked_seats.each do |clicked_seat|%>
+        <h2><%= "#{clicked_seat[:row]}#{clicked_seat[:column]}"%></h2>
+      <% end %>
+    </div>
+    <div style="float:left;margin:20px;">
+      <button style="width: 107px; height: 40px;background:white;" >
+        Buy
+      </button>
+    </div>
+  </div>  
+<% end %>
+</div>
+
