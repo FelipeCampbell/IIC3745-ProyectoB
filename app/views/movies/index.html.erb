@@ -33,7 +33,7 @@
               <strong>Time:</strong>
               <%= {1 => "Matiné", 2 => "Tanda", 3 => "Noche"}[planner.time] %>
             </span>
-            <%= link_to "Choose Seats", new_movie_path %>
+            <%= link_to "Choose Seats", new_movie_path(:movie_id => movie.id, :room => planner.room, :time => planner.time ) %>
           </div>
         <% end %>
       </div>
