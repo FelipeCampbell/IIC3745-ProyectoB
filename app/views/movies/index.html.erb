@@ -2,25 +2,44 @@
 
 <h1>Movies</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Image</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<div class="parent">
+  <% @movies.each do |movie| %>
+    <div class="card">
+      <img class="movie-image" src="<%= movie.image %>" alt="<%= movie.name %>">
+      <div class="container">
+        <h2 class="title"><%= movie.name %></h2>
+        <% movie.planners.each_with_index do |planner, index| %>
+          <% if index == 0%>
+            <div class="dates">
+              <span>
+                <strong>Start Date:</strong>
+                <%= planner.start_date %>
+              </span>
 
-  <tbody>
-    <% @movies.each do |movie| %>
-      <tr>
-        <td><%= movie.name %></td>
-        <td><%= movie.image %></td>
-        <td><%= link_to 'Show', movie %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+              <span>
+                <strong>End Date:</strong>
+                <%= planner.end_date %>
+              </span>
+            </div>
+            
+          <% end %>
+          <div class="room-time">
+            <span>
+              <strong>Room:</strong>
+              <%= planner.room %>
+            </span>
+
+            <span>
+              <strong>Time:</strong>
+              <%= {1 => "Matiné", 2 => "Tanda", 3 => "Noche"}[planner.time] %>
+            </span>
+            <%= link_to "Choose Seats", new_movie_path %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
 
 <br>
 
