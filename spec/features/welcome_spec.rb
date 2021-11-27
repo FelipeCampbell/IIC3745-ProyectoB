@@ -1,12 +1,5 @@
 require 'rails_helper'
 
-RSpec.describe 'Welcome', type: :system do
-  it 'index' do
-    visit '/welcome/index'
-    expect(page).to have_content("Administrar\nReservar")
-  end
-end
-
 RSpec.describe 'Create-Movie', type: :system do
   it 'new-movie' do
     # Fill form
@@ -22,8 +15,8 @@ RSpec.describe 'Create-Movie', type: :system do
 
     # Check movie
     expect(page).to have_content("test-movie-name")
-    expect(page).to have_content("2021-01-12")
-    expect(page).to have_content("2021-10-12")
+    expect(page).to have_content("2021-12-01")
+    expect(page).to have_content("2021-12-01")
     expect(page).to have_content("6") # Room 6
     expect(page).to have_content("3") # Noche
     expect(page).to have_content("1") # Room 1
