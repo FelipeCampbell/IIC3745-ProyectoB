@@ -1,10 +1,11 @@
 <p id="notice"><%= notice %></p>
 
+<div class="container">
 <div style="display: flex;">
 <div style='width: 50%;'>
 <h1 class="title">Cartelera</h1>
 </div>
-<div style='width: 50%;text-align:right;padding-top:30px'>
+<div style='width: 50%;text-align:right;padding-top:10px'>
 <% if params[:admin] %>
   <a class="button" href="<%= new_movie_path%>">
     Agregar película
@@ -71,3 +72,4 @@
 </div>
 
 <br>
+</div>

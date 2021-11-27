@@ -1,5 +1,15 @@
-<h1>New Movie</h1>
+<div class="container">
+<div style="display: flex;">
+<div style='width: 50%;'>
+<h1 class="title">Agregar película</h1>
+</div>
+<div style='width: 50%;text-align:right;padding-top:10px'>
+  <a class="button" href="<%= movies_path(admin:true)%>">
+    Volver
+  </a>
+</div>
+</div>
 
 <%= render 'form', movie: @movie %>
 
-<%= link_to 'Back', movies_path %>
+</div>
