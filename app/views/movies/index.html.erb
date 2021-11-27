@@ -4,12 +4,25 @@
 
 <div class="parent">
   <% @movies.each do |movie| %>
+    <%
+    planners = {}
+    movie.planners.each do |planner|
+      if !planners.include?(planner.room)
+        planners[planner.room] = [planner.time]
+      else 
+        planners[planner.room] << planner.time
+      end
+    end
+    %>
+
     <div class="card">
       <img class="movie-image" src="<%= movie.image %>">
       <div class="container">
         <div class="title"><%= movie.name %></div>
-        <% movie.planners.each_with_index do |planner, index| %>
-          <% if index == 0%>
+          <%
+            if planners.length > 0
+              planner = movie.planners[0]
+          %>
             <div class="dates">
               <div>
                 <strong>Desde:</strong>
@@ -23,17 +36,22 @@
             </div>
             
           <% end %>
+        <% planners.each do |room, times| %>
           <div class="room-time">
             <span>
-              <strong>Room:</strong>
-              <%= planner.room %>
+              <strong>Sala:</strong>
+              <%= room %>
             </span>
 
-            <span>
-              <strong>Time:</strong>
-              <%= {1 => "Matiné", 2 => "Tanda", 3 => "Noche"}[planner.time] %>
-            </span>
-            <%= link_to "Choose Seats", new_movie_path(:movie_id => movie.id, :room => planner.room, :time => planner.time ) %>
+            <% if times.include?(1)%>
+              <%= link_to "Matiné", new_movie_path(:movie_id => movie.id, :room => room, :time => 1 ) %> 
+            <% end %>
+            <% if times.include?(2)%>
+              <%= link_to "Tanda", new_movie_path(:movie_id => movie.id, :room => room, :time => 2 ) %> 
+            <% end %>
+            <% if times.include?(3)%>
+              <%= link_to "Noche", new_movie_path(:movie_id => movie.id, :room => room, :time => 3 ) %> 
+            <% end %>
           </div>
         <% end %>
       </div>
