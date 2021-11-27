@@ -13,3 +13,48 @@
  *= require_tree .
  *= require_self
  */
+
+.title {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 28px;
+  text-transform: uppercase;
+}
+
+.movie-image {
+    max-width: 200px;
+    max-height: 200px;
+    margin-top: 1rem;
+}
+
+.parent {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 250px;
+    min-height: 300px;
+    margin: 10px;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  .card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+  
+  .container {
+    padding: 10px 16px;
+  }
+
+  .dates {
+    text-align: left;
+  }
+  .room-time {
+    text-align: left;
+  }
+

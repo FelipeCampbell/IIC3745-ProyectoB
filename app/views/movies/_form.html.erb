@@ -1,3 +1,4 @@
+<div class="box", style="margin: auto;width: 40%;">
 <%= form_for @movie do |form| %>
   <% if movie.errors.any? %>
     <div id="error_explanation">
@@ -12,38 +13,51 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+    <label class="label">Título </label>
+    <div class="control">
+      <%= form.text_field :name , class:"input"%>
+    </div>
   </div>
   <div class="field">
-    <%= form.label :image %>
-    <%= form.text_field :image %>
+    <label class="label">Link del poster </label>
+    <div class="control">
+      <%= form.text_field :image , class:"input"%>
+    </div>
   </div>
 
   <%= form.fields_for :planners do |f| %>
     <% if (f.options[:child_index] == 0) %>
-      <div class="field">
-      <%= f.label "Start Date" %>
-      <%= f.date_field :start_date %>
+      <div style="display: flex;">
+      <div class="field" style='width: 50%;'>
+        <label class="label">Desde </label>
+        <div class="control">
+          <%= f.date_field :start_date , class:"input"%>
+        </div>
       </div>
-      <div class="field">
-          <%= f.label "End Date" %>
-          <%= f.date_field :end_date %>
+      <div class="field" style='width: 50%;'>
+        <label class="label">Hasta </label>
+        <div class="control">
+          <%= f.date_field :end_date , class:"input"%>
+        </div>
+      </div>
       </div>
     <% end%>
     <%= render 'planner_fields', f:f%>
   <% end %>
-  <%= link_to_add_fields "Add Another Room/Time", form, :planners%>
-
-  <div class="actions">
-    <%= form.submit %>
+  <%= link_to_add_fields "Agregar otra Sala/Horario", form, :planners%>
+  <div class="actions" style="text-align:right">
+    <%= form.submit "Agregar", class:"button is-black" %>
   </div>
 <% end %>
+</div>
 
 <script>
   $('form').on('click', '.add_fields', function(event){
-    console.log('clicked')
+    event.preventDefault();
+    const index = parseInt($(this)[0].id) + 1;
+    const originalDataFields = $(this).attr("data-fields");
+    $(this).data("fields", originalDataFields.replaceAll($(this).attr("data-id"), index));
+    $(this)[0].id = index;
     $(this).before($(this).data('fields'));
-    return event.preventDefault();
   })
 </script>
