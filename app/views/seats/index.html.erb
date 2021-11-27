@@ -1,0 +1,61 @@
+<div style="display: flex; height: 100vh;">
+  <div style="width: 20%; height: 80%; border: 1px solid black; margin-right: 25px">
+    <h1 style="margin: 40px 0 30px 20px">IMAGE</h1>
+    <h2 style="margin: 0 0 30px 20px">MOVIE TITLE: -</h2>
+    <h2 style="margin: 0 0 30px 20px">ROOM: -</h2>
+    <h2 style="margin: 0 0 30px 20px">TIME: -</h2>
+    <% rows = ['A', 'B', 'C', 'D']%>
+    <p><%= @mid %></p>
+    <p><%= @rid %></p>
+    <p><%= @tid %></p>
+  </div>
+  <div style="flex-grow: 1; height: 80%; border: 1px solid black; justify-content: center;  display: flex; flex-direction: row;">
+    <div style="width: 858px;">
+    <h1 style="margin: 40px 0 50px 0; text-align: center"> Choose Seats </h1>
+    <div>
+      <% rows.each do |row| %>
+        <div style="width: 858px; height: 20px;">
+          <div style="float: left; width: 30px; height: 40px; margin: 12px;">
+            <div style="width: 30px; height: 30px;text-align: center;margin-top:10px;font-size:30px;">
+              <%= row %>
+            </div>
+          </div>
+        <% (1..12).each do |column| %>
+          <% if @ocuppied_seats.any?{ |item| item[:row] == row && item[:col] == column} %>
+            <div style="background: red;float: left; border: solid 1px; width: 40px; height: 40px; margin: 12px;">
+            </div>
+          <% else%>
+            <a href=<%= buy_seats_path({row: row, col: column})%>>
+            <% if $clicked_seats.include?({row: row, col: column})%>
+              <div style="background: green; float: left; border: solid 1px; width: 40px; height: 40px; margin: 12px;"> 
+              </div>
+            <% else %>
+              <div style="float: left; border: solid 1px; width: 40px; height: 40px; margin: 12px;"> 
+              </div>
+            <% end %>
+            </a>
+          <% end %>
+        <% end %>
+        </div>
+      <% end %>
+    </div>
+    <h1 style="margin: 0 0 30px 0; text-align: center"> Screen </h1>
+    <% if $clicked_seats.length > 0 %>
+      <div>
+        <div style="float:left; margin-left: 20px; overflow-y: auto; height:150px;">
+          <h2 style="margin-right: 30px;">Asientos</h2>
+          <% $clicked_seats.each do |clicked_seat|%>
+            <h3><%= "#{clicked_seat[:row]}#{clicked_seat[:col]}"%></h3>
+          <% end %>
+        </div>
+        <div style="float:right; margin:100px 20px 20px 20px;">
+          <button style="width: 107px; height: 40px;background:white;" >
+            Buy
+          </button>
+        </div>
+      </div>  
+    <% end %>
+    </div>
+  </div>
+</div>
+
