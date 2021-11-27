@@ -1,5 +1,13 @@
 require 'rails_helper'
 
+RSpec.describe 'Welcome', type: :system do
+  it 'index' do
+    visit '/welcome/index'
+    expect(page).to have_selector(:link_or_button, "Administrar")
+    expect(page).to have_selector(:link_or_button, "Reservar")
+  end
+end
+
 RSpec.describe 'Create-Movie', type: :system do
   it 'new-movie' do
     # Fill form
