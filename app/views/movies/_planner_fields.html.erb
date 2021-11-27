@@ -1,8 +1,18 @@
-<div class="field">
-    <%= f.label "Room" %>
-    <%= f.select(:room, options_for_select((1..8).map { |num| ["Room #{num}", num] })) %>
+<div style="display: flex;">
+<div class="field" style='width: 50%;'>
+    <label class="label">Sala</label>
+    <div class="select">
+    <div class="control">
+        <%= f.select :room, options_for_select((1..8).map { |num| ["Room #{num}", num] }), class:"select" %>
+    </div>
+    </div>
 </div>
-<div class="field">
-    <%= f.label "Time" %>
-    <%= f.select(:time, options_for_select([["Matiné", 1], ["Tanda", 2], ["Noche", 3]])) %>
+<div class="field" style='width: 50%;'>
+    <label class="label">Horario</label>
+    <div class="select">
+    <div class="control">
+        <%= f.select :time, options_for_select([["Matiné", 1], ["Tanda", 2], ["Noche", 3]]), class:"select" %>
+    </div>
+    </div>
+</div>
 </div>

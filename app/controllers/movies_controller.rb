@@ -47,6 +47,13 @@ class MoviesController < ApplicationController
     end
   end
 
+  def destroy
+    Screening.where(movie_id: params[:id]).destroy_all
+    Planner.where(movie_id: params[:id]).destroy_all
+    Movie.find(params[:id]).destroy
+    redirect_to movies_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def date_params?(movie_params)

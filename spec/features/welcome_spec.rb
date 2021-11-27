@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe 'Welcome', type: :system do
   it 'index' do
     visit '/welcome/index'
-    expect(page).to have_content("Welcome#index")
+    expect(page).to have_selector(:link_or_button, "Administrar")
+    expect(page).to have_selector(:link_or_button, "Reservar")
   end
 end
 
@@ -17,8 +18,8 @@ RSpec.describe 'Create-Movie', type: :system do
     fill_in "movie_planners_attributes_0_end_date", :with => "12/10/2021"
     select "Room 6", from: "movie_planners_attributes_0_room"
     select "Noche", from: "movie_planners_attributes_0_time"
-    click_link "Add Another Room/Time"
-    click_button "Create"
+    click_link "Agregar otra Sala/Horario"
+    click_button "Agregar"
 
     # Check movie
     expect(page).to have_content("test-movie-name")
