@@ -37,7 +37,7 @@ class SeatsController < ApplicationController
   def check_same_row_seats
     rows = $clicked_seats.uniq{ |s| s.values_at(:row) }
     if rows.length > 1
-      @message = "Remember you can only buy seats of the same row!"
+      @message = "Recuerda solo puedes comprar asientos de la misma fila!"
     else  
       @message = ""
     end
