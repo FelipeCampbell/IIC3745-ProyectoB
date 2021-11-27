@@ -22,7 +22,7 @@
             <div style="background: red;float: left; border: solid 1px; width: 40px; height: 40px; margin: 12px;">
             </div>
           <% else%>
-            <a href=<%= buy_seats_path({row: row, col: column})%>>
+            <a href=<%= view_seats_path({row: row, col: column})%>>
             <% if $clicked_seats.include?({row: row, col: column})%>
               <div style="background: green; float: left; border: solid 1px; width: 40px; height: 40px; margin: 12px;"> 
               </div>
@@ -47,9 +47,11 @@
           <% end %>
         </div>
         <div style="float:right; margin:100px 20px 20px 20px;">
-          <button style="width: 107px; height: 40px;background:white;" >
-            Buy
-          </button>
+        <% if @message == "" %>
+          <%= button_to "Buy", buy_path(@movie.id, @room, @time), method: "post" %>
+        <% else %>
+          <%= button_to "Buy", buy_path(@movie.id, @room, @time), method: "post", disabled: true%>
+        <% end %>
         </div>
       </div>  
     <% end %>
