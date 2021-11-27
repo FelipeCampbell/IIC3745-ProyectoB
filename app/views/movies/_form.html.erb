@@ -42,8 +42,11 @@
 
 <script>
   $('form').on('click', '.add_fields', function(event){
-    console.log('clicked')
+    event.preventDefault();
+    const index = parseInt($(this)[0].id) + 1;
+    const originalDataFields = $(this).attr("data-fields");
+    $(this).data("fields", originalDataFields.replaceAll($(this).attr("data-id"), index));
+    $(this)[0].id = index;
     $(this).before($(this).data('fields'));
-    return event.preventDefault();
   })
 </script>

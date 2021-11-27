@@ -17,6 +17,7 @@
         <td><%= movie.name %></td>
         <td><%= movie.image %></td>
         <td><%= link_to 'Show', movie %></td>
+        <td><%= link_to 'Destroy', movie, method: :delete %></td>
       </tr>
     <% end %>
   </tbody>

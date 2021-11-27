@@ -22,6 +22,7 @@ class MoviesController < ApplicationController
   # POST /movies or /movies.json
   def create
     movie_params = movie_params()
+    puts movie_params
     @movie = Movie.new(movie_params)
 
     if !date_params?(movie_params)
@@ -45,6 +46,13 @@ class MoviesController < ApplicationController
         format.json { render json: @movie.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def destroy
+    Screening.where(movie_id: params[:id]).destroy_all
+    Planner.where(movie_id: params[:id]).destroy_all
+    Movie.find(params[:id]).destroy
+    redirect_to movies_path
   end
 
   private
