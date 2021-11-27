@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Movies</h1>
+<div>
+<h1 class="title">Cartelera</h1>
+<% if params[:admin] %>
+  <%= link_to 'New Movie', new_movie_path %>
+<% end %>
+</div>
 
 <div class="parent">
   <% @movies.each do |movie| %>
@@ -60,5 +65,3 @@
 </div>
 
 <br>
-
-<%= link_to 'New Movie', new_movie_path %>

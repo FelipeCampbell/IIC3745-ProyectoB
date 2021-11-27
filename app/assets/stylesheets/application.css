@@ -14,6 +14,14 @@
  *= require_self
  */
 
+.title {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 28px;
+  text-transform: uppercase;
+}
+
 .movie-image {
     max-width: 200px;
     max-height: 200px;
@@ -40,16 +48,9 @@
   }
   
   .container {
-    padding: 2px 16px;
+    padding: 10px 16px;
   }
 
-  .title {
-    font-style: normal;
-    font-weight: bold;
-    font-size: 24px;
-    line-height: 28px;
-    text-transform: uppercase;
-  }
   .dates {
     text-align: left;
   }
