@@ -1,22 +1,22 @@
 <div> 
-  <%= button_to "Back", movies_path, method: "get", style: "margin-left: 97%; margin-bottom: 20px" %>
+  <%= button_to "Volver", movies_path, method: "get", style: "margin-left: 92%; margin-bottom: 20px", class:"button is-white" %>
 <div>
-<div style="display: flex; height: 90vh;">
+<div style="display: flex; height: 90vh; max-width: 1200px; margin: auto;">
   <div style="width: 20%; height: 80%; border: 1px solid black; margin-right: 25px">
     <img style="margin: 40px 0 30px 20px; max-width: 80%; height: auto" src="<%= @movie.image %>">
-    <h2 style="margin: 0 0 30px 20px">MOVIE TITLE: <%= @movie.name %> </h2>
-    <h2 style="margin: 0 0 30px 20px">TIME: <%= @time %></h2>
-    <h2 style="margin: 0 0 30px 20px">ROOM: <%= @room %></h2>
+    <h2 class="title" style="margin: 0 0 30px 20px"><%= @movie.name %> </h2>
+    <h2 class="subtitle" style="margin: 0 0 30px 20px">Sala: <%= @room %></h2>
+    <h2 class="subtitle" style="margin: 0 0 30px 20px">Horario: <%= @time %></h2>
     <% rows = ['A', 'B', 'C', 'D']%>
   </div>
   <div style="flex-grow: 1; height: 80%; border: 1px solid black; justify-content: center;  display: flex; flex-direction: row;">
     <div style="width: 858px;">
-    <h1 style="margin: 40px 0 50px 0; text-align: center"> Choose Seats </h1>
+    <h1 class="subtitle" style="margin: 40px 0 50px 0; text-align: center"> Elija asientos </h1>
     <div>
       <% rows.each do |row| %>
         <div style="width: 858px; height: 20px;">
           <div style="float: left; width: 30px; height: 40px; margin: 12px;">
-            <div style="width: 30px; height: 30px;text-align: center;margin-top:10px;font-size:30px;">
+            <div style="width: 30px; height: 30px;text-align: center;font-size:30px;">
               <%= row %>
             </div>
           </div>
@@ -39,21 +39,23 @@
         </div>
       <% end %>
     </div>
-    <h1 style="margin: 0 0 20px 0; text-align: center"> Screen </h1>
+    <div style="width:95%;">
+    <h1 class="title" style="margin: 0 0 20px 0; text-align: center"> PANTALLA </h1>
     <p style="margin: 0 0 10px 20px; color: blue; "><%= @message %><p>
+    </div>
     <% if $clicked_seats.length > 0 %>
       <div>
-        <div style="float:left; margin-left: 20px; overflow-y: auto; height:150px;">
-          <h2 style="margin-right: 30px;">Asientos</h2>
+        <div class="box" style="border: 2px solid black; overflow-y: auto; margin:auto; float:left; width:200px;height:150px;">
+          <h2 class ="subtitle" style="margin-right: 30px;">Asientos</h2>
           <% $clicked_seats.each do |clicked_seat|%>
             <h3><%= "#{clicked_seat[:row]}#{clicked_seat[:col]}"%></h3>
           <% end %>
         </div>
         <div style="float:right; margin:100px 20px 20px 20px;">
         <% if @message == "" %>
-          <%= button_to "Buy", buy_path(@movie.id, @room, @time), method: "post" %>
+          <%= button_to "Comprar", buy_path(@movie.id, @room, @time), method: "post", class:"button is-black" %>
         <% else %>
-          <%= button_to "Buy", buy_path(@movie.id, @room, @time), method: "post", disabled: true%>
+          <%= button_to "Comprar", buy_path(@movie.id, @room, @time), method: "post", disabled: true,  class:"button is-black"%>
         <% end %>
         </div>
       </div>  
