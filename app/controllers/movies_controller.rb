@@ -22,7 +22,6 @@ class MoviesController < ApplicationController
   # POST /movies or /movies.json
   def create
     movie_params = movie_params()
-    puts movie_params
     @movie = Movie.new(movie_params)
 
     if !date_params?(movie_params)
