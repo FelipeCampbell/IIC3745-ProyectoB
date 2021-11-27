@@ -57,3 +57,15 @@
   .room-time {
     text-align: left;
   }
+
+a.button {
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 15px;
+  text-transform: uppercase;
+  border: 1px solid;
+  border-radius: 20px;
+  text-shadow:none;
+  text-align: center;
+  padding: 10px;
+}
