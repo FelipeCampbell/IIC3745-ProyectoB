@@ -1,0 +1,33 @@
+<div>
+    <% rows = ['A', 'B', 'C', 'D']%>
+      <% rows.each do |row| %>
+        <div style="width: 858px; height: 20px;">
+          <div style="float: left; width: 30px; height: 40px; margin: 12px;">
+            <div style="width: 30px; height: 30px;text-align: center;font-size:30px;">
+              <%= row %>
+            </div>
+          </div>
+        <% (1..12).each do |column| %>
+          <% if params[:date]%>
+            <% if @ocuppied_seats.any?{ |item| item[:row] == row && item[:col] == column} %>
+                <div style="background: red;float: left; border: solid 1px; width: 40px; height: 40px; margin: 12px;">
+                </div>
+            <% else%>
+                <a href=<%= view_seats_path({row: row, col: column, date: params[:date]})%>>
+                <% if $clicked_seats.include?({row: row, col: column})%>
+                    <div style="background: green; float: left; border: solid 1px; width: 40px; height: 40px; margin: 12px;"> 
+                    </div>
+                <% else %>
+                    <div style="float: left; border: solid 1px; width: 40px; height: 40px; margin: 12px;"> 
+                    </div>
+                <% end %>
+                </a>
+            <% end %>
+          <% else%>  
+            <div style="float: left; border: solid 1px; width: 40px; height: 40px; margin: 12px;"> 
+            </div>
+          <% end %>
+        <% end %>
+        </div>
+      <% end %>
+</div>
