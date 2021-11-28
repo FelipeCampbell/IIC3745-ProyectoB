@@ -5,17 +5,12 @@ class SeatsController < ApplicationController
     @room = params[:room_id]
     @time = ["Matiné", "Tanda", "Noche"][(params[:time_id].to_i)-1]
     @screenings_dates = Screening.where(movie_id: @movie.id, room: @room.to_i, time: params[:time_id].to_i).select(:date).map(&:date)
-    puts Screening.where(id: 54).first.attributes
-    # screening = Screening.where(movie_id: @movie.id, room: @room.to_i, time: params[:time_id].to_i).first
-    # @ocuppied_seats = Seat.where(screening_id: screening.id)
     if params[:date]
       screening = Screening.where(movie_id: @movie.id, room: @room.to_i, time: params[:time_id].to_i, date: params[:date].to_date).first
       if screening
         @ocuppied_seats = Seat.where(screening_id: screening.id)
-        puts "HI", screening, @ocuppied_seats
       end
     else
-      puts "Hiii! Idonthave date"
       @ocuppied_seats = []
     end
 

@@ -25,7 +25,7 @@
       <div class="field" style='width: 80%; margin: 40px 0 15px 15px;'>
         <label class="label">Fecha</label>
         <div class="control">
-          <%= form.select :date, @screenings_dates %>
+          <%= form.select :date, @screenings_dates, selected: params[:date] %>
         </div>
       </div>
       <%= form.submit "Buscar asientos", class:"button is-black", style: 'margin: 5px 0 15px 15px;' %>
