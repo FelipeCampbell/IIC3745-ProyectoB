@@ -1,10 +1,11 @@
 class SeatsController < ApplicationController
 
   def index 
-    @ocuppied_seats = Seat.all
     @movie = Movie.where(id: params[:movie_id]).first
     @room = params[:room_id]
     @time = ["Matiné", "Tanda", "Noche"][(params[:time_id].to_i)-1]
+    screening = Screening.where(movie_id: @movie.id, room: @room.to_i, time: params[:time_id].to_i).first
+    @ocuppied_seats = Seat.where(screening_id: screening.id)
     if $clicked_seats
       add_or_remove_clicked_seat
     else
