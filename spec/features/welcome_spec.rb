@@ -111,6 +111,24 @@ RSpec.describe 'Create-Movie', type: :system do
     expect(page).to have_content("1") # Room 1
   end
 
+  it 'can-go-to-buy-seats-from-catalog' do
+    fill_form
+    visit '/movies'
+    expect(page).to have_content("TEST-MOVIE-NAME")
+    find(:xpath, "/html/body/div[1]/div[2]/div[1]/div/div[3]/a").click
+    expect(page).to have_content("COMPRAR ASIENTOS")
+    
+  end
+  
+  it 'back-to-index-from-seats' do
+    fill_form
+    visit '/movies'
+    find(:xpath, "/html/body/div[1]/div[2]/div[1]/div/div[3]/a").click
+    expect(page).to have_content("COMPRAR ASIENTOS")
+    find(:xpath, "/html/body/div[1]/div[1]/div[2]/a[1]").click
+    expect(page).to have_content("CARTELERA")
+  end
+
   after do
     DatabaseCleaner.clean
   end
