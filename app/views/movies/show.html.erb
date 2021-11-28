@@ -1,38 +1,61 @@
 <p id="notice"><%= notice %></p>
+<%
+  planners = {}
+  @movie.planners.each do |planner|
+    if !planners.include?(planner.room)
+      planners[planner.room] = [planner.time]
+    else 
+      planners[planner.room] << planner.time
+    end
+  end
+%>
+<div class ="show-container">
+  <div class ="show-holder">
+    <div class="card-show">
+      <img class="movie-image-show" src="<%= @movie.image %>">
+      <div class="container">
+        <div class="title"><%= @movie.name %></div>
+          <%
+            if planners.length > 0
+              planner = @movie.planners[0]
+          %>
+            <div class="dates">
+              <div>
+                <strong>Desde:</strong>
+                <%= planner.start_date.to_s.gsub('-', '/') %>
+              </div>
 
-<p>
-  <strong>Name:</strong>
-  <%= @movie.name %>
-</p>
+              <div>
+                <strong>Hasta:</strong>
+                <%= planner.end_date.to_s.gsub('-', '/') %>
+              </div>
+            </div>
+            
+          <% end %>
+        <% planners.each do |room, times| %>
+          <div class="room-time">
+            <span>
+              <strong>Sala:</strong>
+              <%= room %>
+            </span>
 
-<p>
-  <strong>Image:</strong>
-  <%= @movie.image %>
-</p>
+            <% if times.include?(1)%>
+              Matiné
+            <% end %>
+            <% if times.include?(2)%>
+              Tanda
+            <% end %>
+            <% if times.include?(3)%>
+              Noche
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="link-back">
+    <%= link_to 'Volver a Películas', movies_path %>
+  </div>
+</div>
 
 
-<% @movie.planners.each_with_index do |planner, index| %>
-  <% if index == 0%>
-    <p>
-      <strong>Start Date:</strong>
-      <%= planner.start_date %>
-    </p>
-
-    <p>
-      <strong>End Date:</strong>
-      <%= planner.end_date %>
-    </p>
-  <% end %>
-  <p>
-    <strong>Room:</strong>
-    <%= planner.room %>
-  </p>
-
-  <p>
-    <strong>Time:</strong>
-    <%= planner.time %>
-  </p>
-<% end %>
-
-
-<%= link_to 'Back', movies_path %>
