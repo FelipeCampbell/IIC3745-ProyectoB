@@ -34,6 +34,7 @@ class SeatsController < ApplicationController
 
   def receive_date
     mid, room, time, date = params[:movie_id], params[:room_id], params[:time_id], params[:date]
+    $clicked_seats = []
     redirect_to view_seats_path(mid, room, time, date: date)
   end
 
