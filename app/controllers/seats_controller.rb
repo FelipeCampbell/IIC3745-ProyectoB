@@ -3,9 +3,6 @@ class SeatsController < ApplicationController
   def index 
     @movie = Movie.where(id: params[:movie_id]).first
     @room = params[:room_id]
-    puts "HII"
-    puts params[:admin]
-    puts "---"
     @time = ["Matiné", "Tanda", "Noche"][(params[:time_id].to_i)-1]
     screening = Screening.where(movie_id: @movie.id, room: @room.to_i, time: params[:time_id].to_i).first
     @ocuppied_seats = Seat.where(screening_id: screening.id)
@@ -23,6 +20,7 @@ class SeatsController < ApplicationController
       Seat.create(col: seat[:col], row: seat[:row], screening_id: screening.id)
     end
     $clicked_seats = []
+    flash[:success] = 'Compra exitosa!'
     redirect_to view_seats_path(mid, room, time)
   end
 
