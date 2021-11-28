@@ -1,18 +1,18 @@
 <div style="margin-left: 92%; margin-bottom: 10px"> 
-  <a class="button" href="<%= movies_path%>">
+  <a class="button" href="<%= empty_path%>">
     Volver
   </a>
 </div>
 <div>
 <div style="display: flex; height: 90vh; max-width: 1200px; margin: auto;">
-  <div style="width: 20%; height: 80%; border: 1px solid black; margin-right: 25px">
+  <div style="width: 20%; height: 90%; border: 1px solid black; margin-right: 25px">
     <img style="margin: 10px 0 10px 20px; max-width: 80%; height: auto" src="<%= @movie.image %>">
     <h2 class="title" style="margin: 0 0 5px 20px"><%= @movie.name %> </h2>
     <h2 class="subtitle" style="margin: 0 0 5px 20px">Sala: <%= @room %></h2>
     <h2 class="subtitle" style="margin: 0 0 5px 20px">Horario: <%= @time %></h2>
     <% rows = ['A', 'B', 'C', 'D']%>
   </div>
-  <div style="flex-grow: 1; height: 80%; border: 1px solid black; justify-content: center;  display: flex; flex-direction: row;">
+  <div style="flex-grow: 1; height: 90%; border: 1px solid black; justify-content: center;  display: flex; flex-direction: row;">
     <div style="width: 858px;">
     <h1 class="subtitle" style="margin: 40px 0 50px 0; text-align: center"> Elija asientos </h1>
     <div>

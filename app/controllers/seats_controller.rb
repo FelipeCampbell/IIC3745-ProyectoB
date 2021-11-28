@@ -22,6 +22,11 @@ class SeatsController < ApplicationController
     redirect_to view_seats_path(mid, room, time)
   end
 
+  def empty
+    $clicked_seats = []
+    redirect_to movies_path
+  end
+
   def add_or_remove_clicked_seat
     if params[:row] and params[:col]
       clicked_seat = {row: params[:row], col: params[:col].to_i}
