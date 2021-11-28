@@ -55,15 +55,39 @@
               <%= room %>
             </span>
 
-            <% if times.include?(1)%>
-              <%= link_to "Matiné", view_seats_path(:movie_id => movie.id, :room_id => room, :time_id => 1 ) %> 
-            <% end %>
-            <% if times.include?(2)%>
-              <%= link_to "Tanda", view_seats_path(:movie_id => movie.id, :room_id => room, :time_id => 2 ) %> 
-            <% end %>
-            <% if times.include?(3)%>
-              <%= link_to "Noche", view_seats_path(:movie_id => movie.id, :room_id => room, :time_id => 3 ) %> 
-            <% end %>
+            <%
+              if times.include?(1)
+                if params[:admin]
+            %>
+                Matiné
+              <% else %>
+                <%= link_to "Matiné", view_seats_path(:movie_id => movie.id, :room_id => room, :time_id => 1 ) %> 
+            <%
+                end
+              end
+            %>
+            <%
+              if times.include?(2)
+                if params[:admin]
+            %>
+                Tanda
+              <% else %>
+                <%= link_to "Tanda", view_seats_path(:movie_id => movie.id, :room_id => room, :time_id => 2 ) %> 
+            <%
+                end
+              end
+            %>
+            <%
+              if times.include?(3)
+                if params[:admin]
+            %>
+                Noche
+              <% else %>
+                <%= link_to "Noche", view_seats_path(:movie_id => movie.id, :room_id => room, :time_id => 3 ) %> 
+            <%
+                end
+              end
+            %>
           </div>
         <% end %>
       </div>
