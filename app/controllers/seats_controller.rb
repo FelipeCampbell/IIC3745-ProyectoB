@@ -20,12 +20,13 @@ class SeatsController < ApplicationController
       Seat.create(col: seat[:col], row: seat[:row], screening_id: screening.id)
     end
     $clicked_seats = []
+    flash[:success] = 'Compra exitosa!'
     redirect_to view_seats_path(mid, room, time)
   end
 
   def empty
     $clicked_seats = []
-    redirect_to movies_path
+    redirect_to movies_path(admin: params[:admin])
   end
 
   def add_or_remove_clicked_seat

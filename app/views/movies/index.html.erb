@@ -2,15 +2,18 @@
 
 <div class="container">
 <div style="display: flex;">
-<div style='width: 50%;'>
+<div style='width: 70%;'>
 <h1 class="title">Cartelera</h1>
 </div>
-<div style='width: 50%;text-align:right;padding-top:10px'>
+<div style='width: 30%;text-align:right;padding-top:10px'>
 <% if params[:admin] %>
-  <a class="button" href="<%= new_movie_path%>">
+  <a class="button" style="margin-left: 15px;" href="<%= new_movie_path%>">
     Agregar película
   </a>
 <% end %>
+  <a class="button is-primary" style="margin-left: 5px;" href="<%= root_path%>">
+    Inicio
+  </a>
 </div>
 </div>
 
@@ -56,13 +59,13 @@
             </span>
 
             <% if times.include?(1)%>
-              <%= link_to "Matiné", view_seats_path(:movie_id => movie.id, :room_id => room, :time_id => 1 ) %> 
+              <%= link_to "Matiné", view_seats_path(:movie_id => movie.id, :room_id => room, :time_id => 1, :admin => params[:admin]) %> 
             <% end %>
             <% if times.include?(2)%>
-              <%= link_to "Tanda", view_seats_path(:movie_id => movie.id, :room_id => room, :time_id => 2 ) %> 
+              <%= link_to "Tanda", view_seats_path(:movie_id => movie.id, :room_id => room, :time_id => 2, :admin => params[:admin] ) %> 
             <% end %>
             <% if times.include?(3)%>
-              <%= link_to "Noche", view_seats_path(:movie_id => movie.id, :room_id => room, :time_id => 3 ) %> 
+              <%= link_to "Noche", view_seats_path(:movie_id => movie.id, :room_id => room, :time_id => 3, :admin => params[:admin] ) %> 
             <% end %>
           </div>
         <% end %>

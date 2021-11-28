@@ -1,7 +1,18 @@
-<div style="margin-left: 92%; margin-bottom: 10px"> 
-  <a class="button" href="<%= empty_path%>">
-    Volver
-  </a>
+<div class="container">
+<div style="display: flex; margin-bottom: 15px; margin-top: 10px;">
+  <div style='width: 50%; margin-left: 5px;'>
+    <h1 class="title">COMPRAR ASIENTOS</h1>
+  </div>
+  <div style='width: 50%;text-align:right;'>
+    <% if params[:admin]? admin=true : admin=nil%>
+    <% end %>
+    <a class="button" href="<%= empty_path(admin:admin) %>">
+      Volver
+    </a>
+    <a class="button is-primary" style="margin-left: 5px;" href="<%= root_path%>">
+      Inicio
+    </a>
+  </div>
 </div>
 <div>
 <div style="display: flex; height: 90vh; max-width: 1200px; margin: auto;">
@@ -15,6 +26,11 @@
   <div style="flex-grow: 1; height: 90%; border: 1px solid black; justify-content: center;  display: flex; flex-direction: row;">
     <div style="width: 858px;">
     <h1 class="subtitle" style="margin: 40px 0 50px 0; text-align: center"> Elija asientos </h1>
+    <% flash.each do |key, value| %>
+      <div style="text-align: center; margin-bottom: 5px" class="flash <%= key %>">
+      <h1 style="background-color: green; color: white; font-size:20px"><%= value %><h2>
+      </div>
+    <% end %>
     <div>
       <% rows.each do |row| %>
         <div style="width: 858px; height: 20px;">
@@ -65,5 +81,6 @@
     <% end %>
     </div>
   </div>
+</div>
 </div>
 
