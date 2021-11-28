@@ -3,6 +3,9 @@ class SeatsController < ApplicationController
   def index 
     @movie = Movie.where(id: params[:movie_id]).first
     @room = params[:room_id]
+    puts "HII"
+    puts params[:admin]
+    puts "---"
     @time = ["Matiné", "Tanda", "Noche"][(params[:time_id].to_i)-1]
     screening = Screening.where(movie_id: @movie.id, room: @room.to_i, time: params[:time_id].to_i).first
     @ocuppied_seats = Seat.where(screening_id: screening.id)
@@ -25,7 +28,7 @@ class SeatsController < ApplicationController
 
   def empty
     $clicked_seats = []
-    redirect_to movies_path
+    redirect_to movies_path(admin: params[:admin])
   end
 
   def add_or_remove_clicked_seat
