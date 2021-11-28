@@ -31,12 +31,36 @@ RSpec.describe 'Movies', type: :system do
     expect(page).to have_content("CARTELERA")
     expect(page).to have_no_selector(:link_or_button, "Agregar película")
   end
+
+  it 'go-to-index' do
+    visit '/movies'
+    click_link "Inicio"
+    expect(page).to have_current_path('/')
+  end
+end
+
+RSpec.describe 'Show-Movie', type: :system do
+  it 'go-to-admin-catalog' do
+    visit '/movies/new'
+    fill_in "movie_name", :with => "test-movie-name"
+    fill_in "movie_image", :with => "https://i.redd.it/nvaxpuqwius41.jpg"
+    fill_in "movie_planners_attributes_0_start_date", :with => "12/01/2021"
+    fill_in "movie_planners_attributes_0_end_date", :with => "12/10/2021"
+    select "Room 6", from: "movie_planners_attributes_0_room"
+    select "Noche", from: "movie_planners_attributes_0_time"
+    click_link "Agregar otra Sala/Horario"
+    click_button "Agregar"
+    click_link "Volver a Películas"
+    expect(page).to have_current_path('/movies?admin=true')
+  end
 end
 
 RSpec.describe 'Create-Movie', type: :system do
   before do
-    # Fill form
     visit '/movies/new'
+  end
+
+  def fill_form
     fill_in "movie_name", :with => "test-movie-name"
     fill_in "movie_image", :with => "https://i.redd.it/nvaxpuqwius41.jpg"
     fill_in "movie_planners_attributes_0_start_date", :with => "12/01/2021"
@@ -47,7 +71,13 @@ RSpec.describe 'Create-Movie', type: :system do
     click_button "Agregar"
   end
 
+  it 'go-to-admin-catalog' do
+    click_link "Volver"
+    expect(page).to have_current_path('/movies?admin=true') 
+  end
+
   it 'new-movie' do
+    fill_form
     # Check movie
     expect(page).to have_content("TEST-MOVIE-NAME")
     expect(page).to have_content("2021/12/01")
@@ -58,6 +88,7 @@ RSpec.describe 'Create-Movie', type: :system do
   end
 
   it 'is-new-movie-in-user-catalog' do
+    fill_form
     visit '/movies'
     # Check movie
     expect(page).to have_content("TEST-MOVIE-NAME")
@@ -69,6 +100,7 @@ RSpec.describe 'Create-Movie', type: :system do
   end
 
   it 'is-new-movie-in-admin-catalog' do
+    fill_form
     visit '/movies?admin=true'
     # Check movie
     expect(page).to have_content("TEST-MOVIE-NAME")
