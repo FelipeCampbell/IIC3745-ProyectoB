@@ -4,8 +4,21 @@ class SeatsController < ApplicationController
     @movie = Movie.where(id: params[:movie_id]).first
     @room = params[:room_id]
     @time = ["Matiné", "Tanda", "Noche"][(params[:time_id].to_i)-1]
-    screening = Screening.where(movie_id: @movie.id, room: @room.to_i, time: params[:time_id].to_i).first
-    @ocuppied_seats = Seat.where(screening_id: screening.id)
+    @screenings_dates = Screening.where(movie_id: @movie.id, room: @room.to_i, time: params[:time_id].to_i).select(:date).map(&:date)
+    puts Screening.where(id: 54).first.attributes
+    # screening = Screening.where(movie_id: @movie.id, room: @room.to_i, time: params[:time_id].to_i).first
+    # @ocuppied_seats = Seat.where(screening_id: screening.id)
+    if params[:date]
+      screening = Screening.where(movie_id: @movie.id, room: @room.to_i, time: params[:time_id].to_i, date: params[:date].to_date).first
+      if screening
+        @ocuppied_seats = Seat.where(screening_id: screening.id)
+        puts "HI", screening, @ocuppied_seats
+      end
+    else
+      puts "Hiii! Idonthave date"
+      @ocuppied_seats = []
+    end
+
     if $clicked_seats
       add_or_remove_clicked_seat
     else
@@ -14,14 +27,19 @@ class SeatsController < ApplicationController
   end
 
   def create
-    mid, room, time = params[:movie_id], params[:room_id], (["Matiné", "Tanda", "Noche"].find_index(params[:time_id])+1)
-    screening = Screening.where(movie_id: mid, room: room.to_i, time: time).first
+    mid, room, time, date = params[:movie_id], params[:room_id], (["Matiné", "Tanda", "Noche"].find_index(params[:time_id])+1), params[:date].to_date
+    screening = Screening.where(movie_id: mid, room: room.to_i, time: time, date: date).first
     $clicked_seats.each do |seat|
       Seat.create(col: seat[:col], row: seat[:row], screening_id: screening.id)
     end
     $clicked_seats = []
     flash[:success] = 'Compra exitosa!'
-    redirect_to view_seats_path(mid, room, time)
+    redirect_to view_seats_path(mid, room, time, date: date)
+  end
+
+  def receive_date
+    mid, room, time, date = params[:movie_id], params[:room_id], params[:time_id], params[:date]
+    redirect_to view_seats_path(mid, room, time, date: date)
   end
 
   def empty
