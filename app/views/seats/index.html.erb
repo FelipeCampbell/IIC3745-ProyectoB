@@ -21,43 +21,26 @@
     <h2 class="title" style="margin: 0 0 5px 20px"><%= @movie.name %> </h2>
     <h2 class="subtitle" style="margin: 0 0 5px 20px">Sala: <%= @room %></h2>
     <h2 class="subtitle" style="margin: 0 0 5px 20px">Horario: <%= @time %></h2>
-    <% rows = ['A', 'B', 'C', 'D']%>
+    <%= form_with url: receive_date_path, local: true, method: :post do |form|%>
+      <div class="field" style='width: 80%; margin: 40px 0 15px 15px;'>
+        <label class="label">Fecha</label>
+        <div class="control">
+          <%= form.select :date, @screenings_dates %>
+        </div>
+      </div>
+      <%= form.submit "Buscar asientos", class:"button is-black", style: 'margin: 5px 0 15px 15px;' %>
+    <% end %>
+   
   </div>
   <div style="flex-grow: 1; height: 90%; border: 1px solid black; justify-content: center;  display: flex; flex-direction: row;">
     <div style="width: 858px;">
-    <h1 class="subtitle" style="margin: 40px 0 50px 0; text-align: center"> Elija asientos </h1>
-    <% flash.each do |key, value| %>
-      <div style="text-align: center; margin-bottom: 5px" class="flash <%= key %>">
-      <h1 style="background-color: green; color: white; font-size:20px"><%= value %><h2>
-      </div>
-    <% end %>
-    <div>
-      <% rows.each do |row| %>
-        <div style="width: 858px; height: 20px;">
-          <div style="float: left; width: 30px; height: 40px; margin: 12px;">
-            <div style="width: 30px; height: 30px;text-align: center;font-size:30px;">
-              <%= row %>
-            </div>
-          </div>
-        <% (1..12).each do |column| %>
-          <% if @ocuppied_seats.any?{ |item| item[:row] == row && item[:col] == column} %>
-            <div style="background: red;float: left; border: solid 1px; width: 40px; height: 40px; margin: 12px;">
-            </div>
-          <% else%>
-            <a href=<%= view_seats_path({row: row, col: column})%>>
-            <% if $clicked_seats.include?({row: row, col: column})%>
-              <div style="background: green; float: left; border: solid 1px; width: 40px; height: 40px; margin: 12px;"> 
-              </div>
-            <% else %>
-              <div style="float: left; border: solid 1px; width: 40px; height: 40px; margin: 12px;"> 
-              </div>
-            <% end %>
-            </a>
-          <% end %>
-        <% end %>
+      <h1 class="subtitle" style="margin: 40px 0 50px 0; text-align: center"> Elija asientos </h1>
+      <% flash.each do |key, value| %>
+        <div style="text-align: center; margin-bottom: 5px" class="flash <%= key %>">
+        <h1 style="background-color: green; color: white; font-size:20px"><%= value %><h2>
         </div>
       <% end %>
-    </div>
+    <%= render "seats", locals: {ocuppied_seats: @ocuppied_seats, date: params[:date]} %>
     <div style="width:95%;">
     <h1 class="title" style="margin: 0 0 20px 0; text-align: center"> PANTALLA </h1>
     <p style="margin: 0 0 10px 20px; color: blue; "><%= @message %><p>
@@ -71,10 +54,10 @@
           <% end %>
         </div>
         <div style="float:right; margin:100px 20px 20px 20px;">
-        <% if @message == "" %>
-          <%= button_to "Comprar", buy_path(@movie.id, @room, @time), method: "post", class:"button is-black" %>
+        <% if @message == "" && params[:date] %>
+          <%= button_to "Comprar", buy_path(@movie.id, @room, @time, date: params[:date]), method: "post", class:"button is-black" %>
         <% else %>
-          <%= button_to "Comprar", buy_path(@movie.id, @room, @time), method: "post", disabled: true,  class:"button is-black"%>
+          <%= button_to "Comprar", buy_path(@movie.id, @room, @time, date: params[:date]), method: "post", disabled: true,  class:"button is-black"%>
         <% end %>
         </div>
       </div>  
